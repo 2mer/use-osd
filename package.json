@@ -17,15 +17,14 @@
 	},
 	"scripts": {
 		"dev": "vite",
-		"build": "tsup src/lib/index.ts --dts --format esm,cjs",
+		"build": "tsup src/lib/index.ts --dts --sourcemap --format esm,cjs",
 		"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
 		"preview": "vite preview"
 	},
-	"dependencies": {
-		"react": "^18.3.1",
-		"react-dom": "^18.3.1"
-	},
+	"dependencies": {},
 	"devDependencies": {
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1",
 		"@types/node": "^20.14.9",
 		"@types/openseadragon": "^3.0.10",
 		"@types/react": "^18.3.3",
@@ -42,6 +41,8 @@
 		"vite": "^5.3.1"
 	},
 	"peerDependencies": {
-		"openseadragon": "^4.1.1"
+		"openseadragon": "^4.1.1",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1"
 	}
 }

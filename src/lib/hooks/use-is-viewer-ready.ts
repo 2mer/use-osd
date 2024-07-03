@@ -21,7 +21,7 @@ export function useIsViewerReady(viewer?: Viewer) {
 	// Check upfront if its working.
 	useLayoutEffect(() => {
 		if (viewer && !isReady) {
-			const { x } = viewer.viewport._contentSize;
+			const { x } = (viewer.viewport as any)._contentSize;
 			if (x > 1) {
 				setIsReady(true);
 				return;
@@ -33,7 +33,7 @@ export function useIsViewerReady(viewer?: Viewer) {
 	useInterval(
 		() => {
 			if (viewer) {
-				const { x } = viewer.viewport._contentSize;
+				const { x } = (viewer.viewport as any)._contentSize;
 				if (x > 1) {
 					setIsReady(true);
 					return;

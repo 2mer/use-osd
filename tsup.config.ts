@@ -1,5 +1,5 @@
 import { defineConfig } from 'tsup'
 
 export default defineConfig({
-	external: ['openseadragon']
+	external: ['openseadragon', 'react', 'react-dom']
 })
