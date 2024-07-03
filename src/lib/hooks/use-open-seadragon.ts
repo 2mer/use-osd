@@ -4,12 +4,6 @@ import { useViewerState } from './use-viewer-state';
 import { useIsViewerReady } from './use-is-viewer-ready';
 import OpenSeadragon, { TiledImage } from 'openseadragon';
 
-// type AsyncAddTileSpecifier =
-// 	| TileSourceSpecifier
-// 	| ({ tileSource: TileSourceSpecifier; index: number } & Partial<
-// 		TiledImageSpecifier
-// 	>);
-
 export function useOpenSeadragon(
 	tileSources: OpenSeadragon.Options['tileSources'],
 	osdOptions: OpenSeadragon.Options = {}
@@ -57,19 +51,23 @@ export function useOpenSeadragon(
 	}, [viewer]);
 
 	useLayoutEffect(() => {
-		setViewer(
-			OpenSeadragon({
-				element: osdRef.current!,
-				// Hide controls by default, since user must add path to UI to
-				// render images.
-				showSequenceControl: false,
-				showNavigationControl: false,
-				showZoomControl: false,
-				showHomeControl: false,
-				showFullPageControl: false,
-				...osdOptions,
-			})
-		);
+		const viewer = OpenSeadragon({
+			element: osdRef.current!,
+			// Hide controls by default, since user must add path to UI to
+			// render images.
+			showSequenceControl: false,
+			showNavigationControl: false,
+			showZoomControl: false,
+			showHomeControl: false,
+			showFullPageControl: false,
+			...osdOptions,
+		});
+
+		setViewer(viewer);
+
+		return () => {
+			viewer.destroy();
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [setViewer]);
 
@@ -83,14 +81,15 @@ export function useOpenSeadragon(
 			Promise.all(
 				tileSourcesArray.map(tileSource => asyncAddTile(tileSource))
 			).then(goHome);
+
+			return () => {
+				if (viewer) {
+					setIsReady(false);
+					viewer.close();
+				}
+			};
 		}
 
-		return () => {
-			if (viewer) {
-				setIsReady(false);
-				viewer.close();
-			}
-		};
 	}, [asyncAddTile, goHome, setIsReady, tileSources, viewer]);
 
 	return [osdRef, { isReady, goHome, asyncAddTile, viewer }] as const;

@@ -2,7 +2,7 @@ import { Viewer } from 'openseadragon';
 import React, { PropsWithChildren, useMemo, useState } from 'react';
 
 export type ViewerContextValue = {
-	viewer: Viewer | undefined;
+	viewer: Viewer;
 	setViewer: (viewer: Viewer) => void;
 	isReady: boolean;
 	setIsReady: (value: boolean) => void;
@@ -19,7 +19,7 @@ export const ViewerProvider = ({ children }: PropsWithChildren<{}>) => {
 	return (
 		<ViewerContext.Provider
 			value={useMemo(
-				() => ({ viewer, setViewer, isReady, setIsReady }),
+				() => ({ viewer: viewer!, setViewer, isReady, setIsReady }),
 				[isReady, viewer]
 			)}
 		>

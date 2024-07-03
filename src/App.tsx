@@ -7,11 +7,15 @@ function App() {
 
 	return (
 		<div>
-			{isReady}
 			<div
 				id='content'
 				ref={ref}
-				style={{ width: '500px', height: '500px' }}
+				style={{
+					width: '500px',
+					height: '500px',
+					border: '2px solid red',
+					background: '#acacac',
+				}}
 			/>
 		</div>
 	);
