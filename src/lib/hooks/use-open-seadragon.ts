@@ -94,3 +94,6 @@ export function useOpenSeadragon(
 
 	return [osdRef, { isReady, goHome, asyncAddTile, viewer }] as const;
 }
+
+export const useOsd = useOpenSeadragon
+export const useOSD = useOpenSeadragon
